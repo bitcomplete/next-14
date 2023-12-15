@@ -18,11 +18,11 @@ export async function generateMetadata(
     }
 }
 
-export default async function PhotoPage() {
+export default async function PhotoPage({params: { id }}: Props) {
   // This will only execute on the server:
   console.log("Photo page - you should see this in the server logs only, for all full page loads and once during the first client-side navigation to this page.")
 
-  const {title, description} = await getMetadata()
+  const {title, description} = await getMetadata(id)
 
   return (
     <section>
