@@ -3,6 +3,8 @@
 import {useEffect} from "react"
 
 interface Props {
+    src: string
+    alt: string
     description: string
 }
 
@@ -12,7 +14,7 @@ interface Props {
  * @see https://nextjs.org/docs/app/building-your-application/rendering/client-components
  * @constructor
  */
-export default function PhotoPageContent({ description }: Props) {
+export default function PhotoPageContent({ src, alt, description }: Props) {
     console.log("PhotoPageContent - you should see this in both server logs (for full page loads) and in the client console.")
 
     useEffect(() => {
@@ -21,6 +23,9 @@ export default function PhotoPageContent({ description }: Props) {
 
 
     return (
-        <p>{description}</p>
+        <figure>
+            <img src={src} alt={alt} />
+            <p>{description}</p>
+        </figure>
     )
 }

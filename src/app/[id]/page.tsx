@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import PhotoPageContent from "@/components/PhotoPageContent"
-import { getMetadata } from "@/lib/photoPageData"
+import { getDetailedData, getMetadata } from "@/lib/photoPageData"
 
 type Props = {
     params: { id: string }
@@ -22,7 +22,7 @@ export default async function PhotoPage({params: { id }}: Props) {
   // This will only execute on the server:
   console.log("Photo page - you should see this in the server logs only, for all full page loads and once during the first client-side navigation to this page.")
 
-  const {title, description} = await getMetadata(id)
+  const { title, description, alt, src } = await getDetailedData(id)
 
   return (
     <section>
@@ -30,7 +30,7 @@ export default async function PhotoPage({params: { id }}: Props) {
         <h1>{title}</h1>
       </header>
       <div>
-        <PhotoPageContent description={description} />
+        <PhotoPageContent alt={alt} src={src} description={description} />
       </div>
     </section>
   )
