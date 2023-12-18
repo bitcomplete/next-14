@@ -1,4 +1,5 @@
 const KNOWN_ID = 'old-photo'
+const SOURCE_URL = "https://jsonplaceholder.typicode.com/photos/1"
 
 interface PhotoPageMetadata {
     title: string
@@ -12,19 +13,21 @@ interface DetailedPhotoPageData {
     description: string
 }
 
-export async function getMetadata(id: string): Promise<PhotoPageMetadata> {
-    // This is async data for the layout component and any delay will just make everything slower
-    return new Promise((resolve, reject) => {
+export async function getMetadata(id: string, delay: number): Promise<PhotoPageMetadata> {
+    // Thi
+    return new Promise(async (resolve, reject) => {
+        if (id != KNOWN_ID) {
+            reject(`Unknown id "${id}"`)
+        }
+        const data = await fetch(SOURCE_URL).then(response => response.json()).catch(() => {
+            reject("An error occurred")
+        })
         setTimeout(() => {
-            console.log(`Resolving photo page metadata for photo "${id}"`)
-            if (id != KNOWN_ID) {
-                reject(`Unknown id "$id"`)
-            }
             resolve({
-                title: "Old photo",
-                description: "A photo taken a long time ago"
+                title: data.title,
+                description: "A photo taken a long time ago",
             })
-        }, 500)
+        }, delay)
     })
 }
 
@@ -35,18 +38,21 @@ export async function getMetadata(id: string): Promise<PhotoPageMetadata> {
  */
 
 export async function getDetailedData(id: string): Promise<DetailedPhotoPageData> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+        if (id != KNOWN_ID) {
+            reject(`Unknown id "${id}"`)
+        }
+        const data = await fetch(SOURCE_URL).then(response => response.json()).catch(() => {
+            reject("An error occurred")
+        })
         setTimeout(() => {
-            console.log(`Resolving full photo data for "${id}"`)
-            if (id != KNOWN_ID) {
-                reject(`Unknown id "$id"`)
-            }
             resolve({
-                title: "Old photo",
+                title: data.title,
                 description: "A photo taken a long time ago",
                 alt: "A random photo",
-                src: "https://picsum.photos/200/300"
+                src: data.thumbnailUrl
+
             })
-        }, 5000)
+        }, 3000)
     })
 }

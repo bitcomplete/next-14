@@ -1,21 +1,9 @@
-import type { Metadata } from 'next'
-
 import PhotoPageContent from "@/components/PhotoPageContent"
-import { getDetailedData, getMetadata } from "@/lib/photoPageData"
+import { getDetailedData } from "@/lib/photoPageData"
 
 type Props = {
     params: { id: string }
     searchParams: { [key: string]: string | string[] | undefined }
-}
-
-export async function generateMetadata(
-    { params: { id } }: Props,
-): Promise<Metadata> {
-    const { title, description } = await getMetadata(id)
-    return {
-        title,
-        description
-    }
 }
 
 export default async function PhotoPage({params: { id }}: Props) {
